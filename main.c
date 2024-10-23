@@ -16,20 +16,19 @@
 #define CLEAN_SCREEN = system("clear")
 #endif
 
-
 struct vector2{
     int x,y;
 };
 struct object{
     struct vector2 position;
     char model;
-} player = {0};
+} player = {{0, 0}, 'O'};
 struct camera{
     //null terminated
     struct object** objectList;
     struct vector2 position;
     int amountOfEntities, objectListSize;
-} camera = {0};
+} camera = {NULL, {-4, -4}, 0};
 
 void addVector2(struct vector2* a, const struct vector2* b){
     a->x += b->x;
@@ -80,6 +79,7 @@ void addToCamera(struct object* objectPointer){
         assert(result != NULL);
         camera.objectList = result;
     }
+    puts("addToCamera");
 
     camera.objectList[camera.amountOfEntities-1] = objectPointer;
 }
@@ -110,14 +110,13 @@ int main(){
     terminalSettings.c_lflag &= ~(ICANON | ECHO); 
     tcsetattr(STDIN_FILENO, TCSANOW, &terminalSettings);
     
-    player.model = 'O';
-    addToCamera(&player);
-
     struct object potion;
     potion.position.x = 10;
-    potion.position.y = 10;
+    potion.position.y = 5;
     potion.model = 'P';
+
     addToCamera(&potion);
+    addToCamera(&player);
 
     while(1){
         displayMap();
