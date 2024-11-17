@@ -1,2 +1,2 @@
 a:
-	gcc main.c -o app
+	gcc main.c engine.c -lncursesw -o app
