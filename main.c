@@ -8,8 +8,7 @@ struct sprite player;
 extern struct camera camera;
 
 void keypress(){
-    char move;
-    read(STDIN_FILENO, &move, 1);
+    char move = getch();
     switch(move){
         case 'a':
             player.position.x -= 2;
